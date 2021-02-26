@@ -5,3 +5,12 @@ set-env () {
     export MAMBA_ROOT_PREFIX=${ROOT_PREFIX}/opt/mamba 
     eval "$(${ROOT_PREFIX}/opt/bin/micromamba shell hook -s bash)"
 }
+
+
+mk-env () {
+    micromamba activate
+    micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
+}
+
+
+
