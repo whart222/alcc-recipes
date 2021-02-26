@@ -7,10 +7,14 @@ set-env () {
 }
 
 
+
+activate() {
+    set-env
+    micromamba activate psana_env
+}
+
+
 mk-env () {
     micromamba activate
     micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
 }
-
-
-
