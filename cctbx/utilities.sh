@@ -45,8 +45,25 @@ fix-sysversions () {
 
 
 
-
 mk-cctbx () {
+    env-activate
+
+    fix-sysversions
+
+    pushd ${ROOT_PREFIX}
+
+    python bootstrap.py --builder=dials \
+			--use-conda ${CONDA_PREFIX} \
+			--nproc=${NPROC:-8} \
+			--config-flags="--enable_cxx11" \
+			--config-flags="--no_bin_python" \
+			hot update build
+    popd
+}
+
+
+
+mk-cctbx-no-boost () {
     env-activate
 
     fix-sysversions

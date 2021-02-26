@@ -1,3 +1,6 @@
 opt/bin
 opt/mamba
 patchelf.log
+__pycache__
+modules/
+build/
