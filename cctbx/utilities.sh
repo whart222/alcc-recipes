@@ -79,3 +79,10 @@ mk-cctbx-no-boost () {
 			hot update build
     popd
 }
+
+
+
+activate () {
+    env-activate
+    source ${ROOT_PREFIX}/build/setpaths.sh
+}
