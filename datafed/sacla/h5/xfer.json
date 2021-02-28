@@ -1,0 +1,14 @@
+{
+    "targets": ["run{id}-{chunk}.h5"],
+    "children": [],
+    "id_range": [371999, 372449],
+    "daq_range": [0, 0],
+    "chunk_range": [0, 2],
+    "site": "sacla",
+    "datafed": {
+        "root": "cctbx",
+        "owner": "sacla",
+        "collection": "h5",
+        "test": false
+    }
+}
