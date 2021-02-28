@@ -1,0 +1,11 @@
+{
+    "targets": [],
+    "children": ["h5"],
+    "site": "sacla",
+    "datafed": {
+        "root": "cctbx",
+        "owner": "cctbx",
+        "collection": "sacla",
+        "test": false
+    }
+}

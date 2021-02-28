@@ -1,0 +1,11 @@
+{
+    "targets": [],
+    "children": ["xtc"],
+    "site": "lcls",
+    "datafed": {
+        "root": "cctbx",
+        "owner": "cctbx",
+        "collection": "lcls",
+        "test": false
+    }
+}
