@@ -24,9 +24,11 @@ mk-env () {
     # switch to mpich
     if [[ $1 == "mpich" ]]
     then
+        micromamba activate psana_env
         micromamba install conda -c defaults --yes
         # HACK: mamba/micromamba does not support --force removal yet
-        conda remove --force mpi4py mpi openmpi
+        # https://github.com/mamba-org/mamba/issues/412
+        conda remove --force mpi4py mpi openmpi --yes
         micromamba install mpi4py -c defaults --yes
     fi 
 
