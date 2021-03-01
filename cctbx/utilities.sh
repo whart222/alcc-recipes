@@ -21,7 +21,8 @@ mk-env () {
 
     micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
 
-    # switch to mpich
+    # switch to mpich -- the psana package explicitly downloads openmpi which
+    # is incompatible with some systems
     if [[ $1 == "mpich" ]]
     then
         micromamba activate psana_env
