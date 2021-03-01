@@ -1,7 +1,12 @@
 #!/bin/bash
 
+
+
+export ROOT_PREFIX=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
+
+
+
 setup-env () {
-    export ROOT_PREFIX=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
     export MAMBA_ROOT_PREFIX=${ROOT_PREFIX}/opt/mamba 
     eval "$(${ROOT_PREFIX}/opt/bin/micromamba shell hook -s bash)"
 }
@@ -53,11 +58,12 @@ mk-cctbx () {
     pushd ${ROOT_PREFIX}
 
     python bootstrap.py --builder=dials \
-			--use-conda ${CONDA_PREFIX} \
-			--nproc=${NPROC:-8} \
-			--config-flags="--enable_cxx11" \
-			--config-flags="--no_bin_python" \
-			hot update build
+                        --use-conda ${CONDA_PREFIX} \
+                        --nproc=${NPROC:-8} \
+                        --config-flags="--enable_cxx11" \
+                        --config-flags="--no_bin_python" \
+                        --config-flags="--enable_openmp_if_possible=True" \
+                        hot update build
     popd
 }
 
@@ -71,12 +77,13 @@ mk-cctbx-no-boost () {
     pushd ${ROOT_PREFIX}
 
     python bootstrap.py --builder=dials \
-			--use-conda ${CONDA_PREFIX} \
-			--nproc=${NPROC:-8} \
-			--config-flags="--enable_cxx11" \
-			--config-flags="--no_bin_python" \
-			--no-boost-src \
-			hot update build
+                        --use-conda ${CONDA_PREFIX} \
+                        --nproc=${NPROC:-8} \
+                        --config-flags="--enable_cxx11" \
+                        --config-flags="--no_bin_python" \
+                        --config-flags="--enable_openmp_if_possible=True" \
+                        --no-boost-src \
+                        hot update build
     popd
 }
 
