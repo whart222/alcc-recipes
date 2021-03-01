@@ -21,6 +21,15 @@ mk-env () {
 
     micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
 
+    # switch to mpich
+    if [[ $1 == "mpich" ]]
+    then
+        micromamba install mamba -c defaults --yes
+        # HACK: mamba/micromamba does not support --force removal yet
+        conda remove --force mpi4py mpi openmpi
+        mamba install mpi4py -c defaults --yes
+    fi 
+
     python \
         ${ROOT_PREFIX}/opt/util/patch-rpath.py \
         ${MAMBA_ROOT_PREFIX}/envs/psana_env/lib
