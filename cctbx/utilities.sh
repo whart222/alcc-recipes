@@ -24,10 +24,10 @@ mk-env () {
     # switch to mpich
     if [[ $1 == "mpich" ]]
     then
-        micromamba install mamba -c defaults --yes
+        micromamba install conda -c defaults --yes
         # HACK: mamba/micromamba does not support --force removal yet
         conda remove --force mpi4py mpi openmpi
-        mamba install mpi4py -c defaults --yes
+        micromamba install mpi4py -c defaults --yes
     fi 
 
     python \
