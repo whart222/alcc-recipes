@@ -89,6 +89,17 @@ mk-cctbx-no-boost () {
 
 
 
+patch-dispatcher () {
+
+    pushd ${ROOT_PREFIX}/build
+    ln -fs ${ROOT_PREFIX}/dispatcher_includes/dispatcher_include_$1.sh \
+           dispatcher_include.sh
+    popd
+
+    libtbx.refresh
+}
+
+
 activate () {
     env-activate
     source ${ROOT_PREFIX}/build/setpaths.sh
