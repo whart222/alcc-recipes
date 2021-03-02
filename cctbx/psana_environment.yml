@@ -34,7 +34,8 @@ dependencies:
  # graphics
  - pillow
  - reportlab
- - wxpython
+ # - wxpython
+ - wxpython=4.0.*
  - pyopengl
  - libtiff
 
