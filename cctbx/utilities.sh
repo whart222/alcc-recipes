@@ -101,6 +101,45 @@ mk-cctbx-no-boost () {
 
 
 
+remk-cctbx () {
+    env-activate
+
+    fix-sysversions
+
+    pushd ${ROOT_PREFIX}
+
+    python bootstrap.py --builder=dials \
+                        --use-conda ${CONDA_PREFIX} \
+                        --nproc=${NPROC:-8} \
+                        --config-flags="--enable_cxx11" \
+                        --config-flags="--no_bin_python" \
+                        --config-flags="--enable_openmp_if_possible=True" \
+                        build
+    popd
+}
+
+
+
+remk-cctbx-no-boost () {
+    env-activate
+
+    fix-sysversions
+
+    pushd ${ROOT_PREFIX}
+
+    python bootstrap.py --builder=dials \
+                        --use-conda ${CONDA_PREFIX} \
+                        --nproc=${NPROC:-8} \
+                        --config-flags="--enable_cxx11" \
+                        --config-flags="--no_bin_python" \
+                        --config-flags="--enable_openmp_if_possible=True" \
+                        --no-boost-src \
+                        build
+    popd
+}
+
+
+
 patch-dispatcher () {
 
     pushd ${ROOT_PREFIX}/build
