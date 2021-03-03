@@ -34,6 +34,7 @@ RUN \
         strace                                                                 \
         patchelf                                                               \
         libgl1-mesa-dev                                                        \
+        libglu1-mesa-dev                                                       \
         libgtk2.0-0                                                            \
         x11-xserver-utils
 

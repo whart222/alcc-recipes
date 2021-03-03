@@ -31,6 +31,7 @@ mk-env () {
         # https://github.com/mamba-org/mamba/issues/412
         conda remove --force mpi4py mpi openmpi --yes
         micromamba install mpi4py -c defaults --yes
+        micromamba deactivate
     fi 
 
     python \
