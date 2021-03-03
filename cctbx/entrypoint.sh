@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
 
-# HACK: don't load the cori-specifics -- the module system will interfere with
-# docker/shifter:
-__old_nersc_host=$NERSC_HOST
-NERSC_HOST="docker"
+# export the utilities definitions to subshells
+set -o allexport
 
 # Load cctbx enviromnet
 source /img/utilities.sh
 activate
-
-# restore NERSC_HOST (might be used somewhere else)
-NERSC_HOST=$__old_nersc_host
 
 exec "$@"
