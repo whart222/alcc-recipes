@@ -60,6 +60,17 @@ WORKDIR /img
 RUN mkdir -p /img
 COPY . /img
 
+RUN cd /img                                                                 && \
+    ./opt/get_mamba_linux-64.sh
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    mk-env mpich
+   
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    mk-cctbx
+ 
 
 #-------------------------------------------------------------------------------
 # LDCONFIG
