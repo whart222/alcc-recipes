@@ -76,7 +76,11 @@ RUN cd /img                                                                 && \
     source utilities.sh                                                     && \
     activate                                                                && \
     patch-dispatcher docker
- 
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    activate                                                                && \
+    micromamba clean -ay
 
 #-------------------------------------------------------------------------------
 # LDCONFIG
