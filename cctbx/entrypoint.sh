@@ -6,7 +6,8 @@ __old_nersc_host=$NERSC_HOST
 NERSC_HOST="docker"
 
 # Load cctbx enviromnet
-source /img/activate.sh
+source /img/utilities.sh
+activate
 
 # restore NERSC_HOST (might be used somewhere else)
 NERSC_HOST=$__old_nersc_host

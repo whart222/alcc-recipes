@@ -74,7 +74,8 @@ RUN cd /img                                                                 && \
 
 RUN cd /img                                                                 && \
     source utilities.sh                                                     && \
-    patch-dispatcher nersc
+    activate                                                                && \
+    patch-dispatcher docker
  
 
 #-------------------------------------------------------------------------------
