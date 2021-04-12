@@ -34,9 +34,10 @@ mk-env () {
         micromamba deactivate
     fi 
 
-    python \
-        ${ROOT_PREFIX}/opt/util/patch-rpath.py \
-        ${MAMBA_ROOT_PREFIX}/envs/psana_env/lib
+    echo "You must patch your .so files using Patchelf. Follow these steps:"
+    echo "(1) $ salloc --nodes=1 --tasks-per-node=32 --constraint=haswell --time=2:00:00 -A lcls -q interactive"
+    echo "(2) Activate a conda environment with patchelf available"
+    echo "(3) $ $ROOT_PREFIX/opt/util/patch_all_parallel.sh $MAMBA_ROOT_PREFIX/envs/psana_env/lib"
 }
 
 
