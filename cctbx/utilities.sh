@@ -54,6 +54,7 @@ mk-env-cgpu () {
     conda remove --force mpi4py mpi openmpi --yes
     module load cgpu gcc openmpi
     MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
+    module unload cgpu gcc openmpi
     micromamba create -n patchelf_env python=3.8 patchelf -c defaults -y
     micromamba deactivate
 
