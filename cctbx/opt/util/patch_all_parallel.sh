@@ -12,3 +12,11 @@ for f in $(find $TARGET_ROOT -name "*.so"); do
   done
   python $PATCH_SCRIPT $f &
 done
+
+while true; do
+  sleep 6
+  let n_running=$(jobs|grep patch-rpath_onefile|wc -l)
+  if [[ n_running -eq 0 ]]; then break; fi
+done
+
+echo Finished!

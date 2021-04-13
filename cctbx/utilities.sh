@@ -34,12 +34,42 @@ mk-env () {
         micromamba deactivate
     fi 
 
-    echo "You must patch your .so files using Patchelf. Follow these steps:"
-    echo "(1) $ salloc --nodes=1 --tasks-per-node=32 --constraint=haswell --time=2:00:00 -A lcls -q interactive"
-    echo "(2) Activate a conda environment with patchelf available"
-    echo "(3) $ $ROOT_PREFIX/opt/util/patch_all_parallel.sh $MAMBA_ROOT_PREFIX/envs/psana_env/lib"
+    python \
+        ${ROOT_PREFIX}/opt/util/patch-rpath.py \
+        ${MAMBA_ROOT_PREFIX}/envs/psana_env/lib
 }
 
+mk-env-cgpu () {
+    setup-env
+
+    micromamba activate
+    micromamba install python=3.8 -c defaults --yes
+
+    micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
+
+    micromamba activate psana_env
+    micromamba install conda -c defaults --yes
+    # HACK: mamba/micromamba does not support --force removal yet
+    # https://github.com/mamba-org/mamba/issues/412
+    conda remove --force mpi4py mpi openmpi --yes
+    module load cgpu gcc openmpi
+    MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
+    micromamba create -n patchelf_env python=3.8 patchelf -c defaults -y
+    micromamba deactivate
+
+    cat << EOF > $ROOT_PREFIX/opt/util/do_patch.sh
+source $ROOT_PREFIX/utilities.sh
+setup-env
+micromamba activate patchelf_env
+$ROOT_PREFIX/opt/util/patch_all_parallel.sh $MAMBA_ROOT_PREFIX/envs/psana_env/lib
+EOF
+
+    chmod +x $ROOT_PREFIX/opt/util/do_patch.sh
+
+    echo "Please patch your .so files using Patchelf. Follow these steps:"
+    echo "(1) $ salloc --nodes=1 --constraint=haswell --time=30 -A lcls -q interactive"
+    echo "(2) $ $ROOT_PREFIX/opt/util/do_patch.sh"
+}
 
 
 env-activate () {
