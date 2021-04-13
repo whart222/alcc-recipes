@@ -94,7 +94,18 @@ mk-cctbx-cuda () {
                         --config-flags="--no_bin_python" \
                         --config-flags="--enable_openmp_if_possible=True" \
                         --config-flags="--enable_cuda" \
-                        hot update build
+                        --python=37 \
+                        hot update
+    module load cgpu cuda
+    python bootstrap.py --builder=dials \
+                        --use-conda ${CONDA_PREFIX} \
+                        --nproc=${NPROC:-8} \
+                        --config-flags="--enable_cxx11" \
+                        --config-flags="--no_bin_python" \
+                        --config-flags="--enable_openmp_if_possible=True" \
+                        --config-flags="--enable_cuda" \
+                        --python=37 \
+                        build
     popd
 }
 
