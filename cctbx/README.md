@@ -20,7 +20,7 @@ $ mkdir test; cd test
 $ srun -n 1 -c 10 libtbx.run_tests_parallel module=LS49 module=simtbx nproc=Auto
 ```
 
-## Compile Compile
+## Compile
 
 1. ./opt/get_mamba_linux-64.sh
 2. source utilites.sh
