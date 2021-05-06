@@ -32,7 +32,15 @@ mk-env () {
         conda remove --force mpi4py mpi openmpi --yes
         micromamba install mpi4py -c defaults --yes
         micromamba deactivate
-    fi 
+    elif [[ $1 == "openmpi" ]]
+    then 
+        micromamba activate psana_env
+        micromamba install conda -c defaults --yes
+        # HACK: mamba/micromamba does not support --force removal yet
+        # https://github.com/mamba-org/mamba/issues/412
+        conda remove --force mpi4py mpi openmpi --yes
+        MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
+    fi
 
     python \
         ${ROOT_PREFIX}/opt/util/patch-rpath.py \
