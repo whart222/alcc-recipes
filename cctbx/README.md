@@ -10,7 +10,9 @@ a completed setup, all you need to do is load any modules and run:
 
 * For a complete rebuild run `./setup_cori_gpu.sh` 
 * For a partial rebuild (of an already installed and configured environment)
-  run: `mk-cctbx cuda build`
+  run: `mk-cctbx cuda build` (assuming that you've already run `source
+  activate.sh`)
+
 **And get some coffee**
 
 **Note:** the arguments after `mk-cctbx cuda` are the usual arguments for
