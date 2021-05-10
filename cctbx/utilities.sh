@@ -112,7 +112,7 @@ mk-cctbx () {
                             --config-flags="--enable_cxx11" \
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
-                            $2
+                            ${@:2}
     elif [[ $1 == "no-boost" ]]
     then
         python bootstrap.py --builder=dials \
@@ -122,7 +122,7 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --no-boost-src \
-                            $2
+                            ${@:2}
     elif [[ $1 == "cuda" ]]
     then
         python bootstrap.py --builder=dials \
@@ -132,7 +132,7 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --config-flags="--enable_cuda"
-                            $2
+                            ${@:2}
     fi
     popd
 }

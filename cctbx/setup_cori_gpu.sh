@@ -21,5 +21,5 @@ module load cgpu gcc cuda openmpi
 
 mk-env openmpi
 fix-sysversions
-mk-cctbx cuda
-patch-dispatcher
+mk-cctbx cuda build hot update
+patch-dispatcher nersc
