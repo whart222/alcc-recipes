@@ -29,7 +29,7 @@ mk-env () {
         micromamba install conda -c defaults --yes
         # HACK: mamba/micromamba does not support --force removal yet
         # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes
+        conda remove --force mpi4py mpi openmpi --yes || true
         micromamba install mpi4py -c defaults --yes
         micromamba deactivate
     elif [[ $1 == "openmpi" ]]
@@ -38,7 +38,7 @@ mk-env () {
         micromamba install conda -c defaults --yes
         # HACK: mamba/micromamba does not support --force removal yet
         # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes
+        conda remove --force mpi4py mpi openmpi --yes || true
         MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir \
             mpi4py mpi4py
     elif [[ $1 == "cray-mpich" ]]
@@ -47,12 +47,12 @@ mk-env () {
         micromamba install conda -c defaults --yes
         # HACK: mamba/micromamba does not support --force removal yet
         # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes
+        conda remove --force mpi4py mpi openmpi --yes || true
         MPICC="cc -shared" pip install --no-binary mpi4py --no-cache-dir\
             mpi4py mpi4py
     fi
 
-    mamba deactivate
+    micromamba deactivate
 }
 
 
@@ -131,7 +131,7 @@ mk-cctbx () {
                             --config-flags="--enable_cxx11" \
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
-                            --config-flags="--enable_cuda"
+                            --config-flags="--enable_cuda" \
                             ${@:2}
     fi
     popd
