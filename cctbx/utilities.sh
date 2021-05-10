@@ -140,7 +140,7 @@ mk-cctbx () {
 
 
 patch-dispatcher () {
-    env-activate
+    activate
 
     pushd ${ROOT_PREFIX}/build
     ln -fs ${ROOT_PREFIX}/dispatcher_includes/dispatcher_include_$1.sh \
