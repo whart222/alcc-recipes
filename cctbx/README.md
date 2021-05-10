@@ -1,18 +1,17 @@
 # Install Scripts for CCTBX Across NERSC, OLCF, and ALCF
 
+This is a collection of setup and management scripts for CCTBX. If you have
+a completed setup, all you need to do is load any modules and run:
+`source activate.sh` (cf. below for more details).
+
 ## Building CCTBX and its Dependencies
 
 ### Building for Cori GPU
 
 * For a complete rebuild run `./setup_cori_gpu.sh` 
 * For a partial rebuild (of an already installed and configured environment)
-  run:
-  ```bash
-  source activate.sh
-  mk-cctbx cuda build
-  ```
+  run: `mk-cctbx cuda build`
 **And get some coffee**
-
 
 **Note:** the arguments after `mk-cctbx cuda` are the usual arguments for
 `boostrap.py`
