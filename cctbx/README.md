@@ -9,6 +9,8 @@
   source activate.sh
   mk-cctbx cuda build
   ```
+**And get some coffee**
+
 
 **Note:** the arguments after `mk-cctbx cuda` are the usual arguments for
 `boostrap.py`
@@ -25,11 +27,6 @@ cd modules
 git clone https://github.com/nksauter/LS49
 git clone https://gitlab.com/cctbx/ls49_big_data
 libtbx.configure LS49 ls49_big_data
-$ module load cgpu
-$ salloc -N 1 --time=60 -c 10 -C gpu -G 1 -A m1759 -q interactive
-$ source ../build/conda_setpaths.sh
-$ mkdir test; cd test
-$ srun -n 1 -c 10 libtbx.run_tests_parallel module=LS49 module=simtbx nproc=Auto
 ```
 
 ##  To Run
