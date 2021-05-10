@@ -1,5 +1,12 @@
 ## Building for Cori GPU (on cscratch)
 
+* For a complete rebuild run `./setup_cori_gpu.sh` 
+* For a partial rebuild (of an already installed and configured environment) run:
+  ```bash
+  source activate.sh
+  mk-cctbx build
+  ```
+
 ```
 $ cd alcc-recipes/cctbx
 $ ./opt/get_mamba_linux-64.sh
