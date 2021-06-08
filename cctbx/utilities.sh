@@ -93,14 +93,8 @@ env-activate () {
 
 
 
-
-
-
-
 mk-cctbx () {
     env-activate
-
-    fix-sysversions
 
     pushd ${ROOT_PREFIX}
 
