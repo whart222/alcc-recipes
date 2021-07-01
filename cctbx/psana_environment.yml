@@ -40,8 +40,8 @@ dependencies:
  - libtiff
 
  # HDF5 (main libraries come with psana)
- # - hdf5_plugins                      # [unix]
- - hdf5-external-filter-plugins  # [unix]
+ - hdf5plugin                      # [unix]
+ # - hdf5-external-filter-plugins  # [unix]
 
  # other
  - libsvm
