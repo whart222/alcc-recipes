@@ -115,6 +115,7 @@ mk-cctbx () {
     if [[ $1 == "classic" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
@@ -124,6 +125,7 @@ mk-cctbx () {
     elif [[ $1 == "no-boost" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
@@ -134,6 +136,7 @@ mk-cctbx () {
     elif [[ $1 == "cuda" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
