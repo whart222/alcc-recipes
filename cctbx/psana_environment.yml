@@ -75,3 +75,6 @@ dependencies:
  - mysql-connector-c
  - mysqlclient
  - sqlite
+
+ - pybind11
+ - scikit-learn
