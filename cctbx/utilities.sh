@@ -19,7 +19,12 @@ mk-env () {
     micromamba activate
     micromamba install python=3.8 -c defaults --yes
 
-    micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
+    if [[ $2 == "perlmutter" ]]
+    then
+        micromamba create -f ${ROOT_PREFIX}/perlmutter_environment.yml --yes
+    else
+        micromamba create -f ${ROOT_PREFIX}/psana_environment.yml --yes
+    fi
 
     # switch MPI backends -- the psana package explicitly downloads openmpi
     # which is incompatible with some systems
@@ -48,8 +53,17 @@ mk-env () {
         # HACK: mamba/micromamba does not support --force removal yet
         # https://github.com/mamba-org/mamba/issues/412
         conda remove --force mpi4py mpi openmpi --yes || true
-        MPICC="cc -shared" pip install --no-binary mpi4py --no-cache-dir\
+        MPICC="cc -shared" pip install --no-binary mpi4py --no-cache-dir \
             mpi4py mpi4py
+    elif [[ $1 == "cray-cuda-mpich" ]]
+    then
+        micromamba activate psana_env
+        micromamba install conda -c defaults --yes
+        # HACK: mamba/micromamba does not support --force removal yet
+        # https://github.com/mamba-org/mamba/issues/412
+        conda remove --force mpi4py mpi openmpi --yes || true
+        MPICC="$(which cc) -shared -lcuda -lcudart -lmpi -lgdrapi"\
+            pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
     fi
 
     micromamba deactivate
@@ -101,6 +115,7 @@ mk-cctbx () {
     if [[ $1 == "classic" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
@@ -110,6 +125,7 @@ mk-cctbx () {
     elif [[ $1 == "no-boost" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
@@ -120,6 +136,7 @@ mk-cctbx () {
     elif [[ $1 == "cuda" ]]
     then
         python bootstrap.py --builder=dials \
+                            --python=37 \
                             --use-conda ${CONDA_PREFIX} \
                             --nproc=${NPROC:-8} \
                             --config-flags="--enable_cxx11" \
