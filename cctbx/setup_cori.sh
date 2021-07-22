@@ -6,7 +6,7 @@ export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
 source ${ALCC_CCTBX_ROOT}/utilities.sh
 source ${ALCC_CCTBX_ROOT}/opt/util/fix_lib_nersc.sh
-source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cgpu.sh
+source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cori.sh
 
 fix-sysversions () {
     env-activate
@@ -20,17 +20,17 @@ fix-sysversions () {
 
 load-sysenv
 
-mk-env openmpi
+mk-env cray-mpich
 if fix-sysversions
 then
     return 1
 fi
-mk-cctbx cuda build hot update
+mk-cctbx classic build hot update
 patch-dispatcher nersc
 
 cat > ${ALCC_CCTBX_ROOT}/activate.sh << EOF
 source ${ALCC_CCTBX_ROOT}/utilities.sh
-source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cgpu.sh
+source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cori.sh
 load-sysenv
 activate
 EOF

@@ -2,8 +2,11 @@
 
 set -e
 
-source $(readlink -f $(dirname ${BASH_SOURCE[0]}))/utilities.sh
-source $(readlink -f $(dirname ${BASH_SOURCE[0]}))/opt/util/fix_lib_nersc.sh
+export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
+
+source ${ALCC_CCTBX_ROOT}/utilities.sh
+source ${ALCC_CCTBX_ROOT}/opt/util/fix_lib_nersc.sh
+source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cori.sh
 
 fix-sysversions () {
     env-activate
@@ -13,9 +16,9 @@ fix-sysversions () {
     fi
 }
 
-module load PrgEnv-gnu cudatoolkit craype-accel-nvidia80 gcc
-
 ./opt/get_mamba_linux-64.sh
+
+load-sysenv
 
 mk-env cray-cuda-mpich
 if fix-sysversions
@@ -24,3 +27,10 @@ then
 fi
 mk-cctbx cuda build hot update
 patch-dispatcher nersc
+
+cat > ${ALCC_CCTBX_ROOT}/activate.sh << EOF
+source ${ALCC_CCTBX_ROOT}/utilities.sh
+source ${ALCC_CCTBX_ROOT}/opt/site/nersc_perlmutter.sh
+load-sysenv
+activate
+EOF
