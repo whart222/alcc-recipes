@@ -33,4 +33,7 @@ source ${ALCC_CCTBX_ROOT}/utilities.sh
 source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cgpu.sh
 load-sysenv
 activate
+
+export SIT_DATA=\${OVERWRITE_SIT_DATA:-\$NERSC_SIT_DAT}:\$SIT_DATA
+export SIT_PSDM_DATA=\${OVERWRITE_SIT_PSDM_DATA:-\$NERSC_SIT_PSDM_DATA}
 EOF
