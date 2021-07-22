@@ -154,7 +154,7 @@ patch-dispatcher () {
     activate
 
     pushd ${ROOT_PREFIX}/build
-    ln -fs ${ROOT_PREFIX}/dispatcher_includes/dispatcher_include_$1.sh \
+    ln -fs ${ROOT_PREFIX}/opt/site/dispatcher/dispatcher_include_$1.sh \
            dispatcher_include.sh
     popd
 
