@@ -87,10 +87,11 @@ RUN cd /img                                                                 && \
     source utilities.sh                                                     && \
     mk-env conda-mpich
 
-# RUN cd /img                                                                 && \
-#     source utilities.sh                                                     && \
-#     mk-cctbx
-# 
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    export NPROC=$(nproc)                                                   && \
+    mk-cctbx classic
+
 # RUN cd /img                                                                 && \
 #     source utilities.sh                                                     && \
 #     activate                                                                && \
