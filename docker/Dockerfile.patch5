@@ -1,0 +1,10 @@
+FROM  cctbx-xfel:p4
+
+
+RUN cd /img/modules/cctbx_project                                           && \
+    git pull                                                                && \
+    git checkout mpi_experiment
+
+RUN cd /img/modules/dials                                                   && \
+    git pull                                                                && \
+    git checkout mpi_experiment
