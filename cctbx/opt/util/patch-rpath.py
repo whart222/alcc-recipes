@@ -83,6 +83,8 @@ def set_elf_path(rpath, file_name, log="patchelf.log"):
 if __name__ == "__main__":
     target_dir = sys.argv[1]
 
+    print(f"Patching RPATH to RUNPATH for all shared objects in {target_dir}")
+
     for root, dirs, files in os.walk(target_dir):
         for file_name in glob.glob(os.path.join(root, "*.so")):
             elf = read_elf(file_name)

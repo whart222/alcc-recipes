@@ -92,38 +92,43 @@ RUN cd /img                                                                 && \
     export NPROC=$(nproc)                                                   && \
     mk-cctbx classic
 
-# RUN cd /img                                                                 && \
-#     source utilities.sh                                                     && \
-#     activate                                                                && \
-#     patch-dispatcher docker
-# 
-# RUN cd /img                                                                 && \
-#     source utilities.sh                                                     && \
-#     activate                                                                && \
-#     micromamba clean -ay
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    patch-env
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    activate                                                                && \
+    patch-dispatcher docker
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    activate                                                                && \
+    micromamba clean -ay
 
 #-------------------------------------------------------------------------------
 
 
-# #-------------------------------------------------------------------------------
-# # LDCONFIG
-# #
-# # We recommend running an /sbin/ldconfig as part of the image build (e.g. in
-# # the Dockerfile) to update the cache after installing any new libraries in in
-# # the image build.
-# #
-# 
-# RUN /sbin/ldconfig
-# 
-# #-------------------------------------------------------------------------------
-# 
-# 
-# #-------------------------------------------------------------------------------
-# # ENTRYPOINT
-# #
-# 
-# RUN chmod +x entrypoint.sh
-# 
-# ENTRYPOINT ["/img/entrypoint.sh"]
-# 
-# #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# LDCONFIG
+#
+# We recommend running an /sbin/ldconfig as part of the image build (e.g. in
+# the Dockerfile) to update the cache after installing any new libraries in in
+# the image build.
+#
+
+RUN /sbin/ldconfig
+
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# ENTRYPOINT
+#
+
+ADD docker/entrypoint.sh /img
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["/img/entrypoint.sh"]
+
+#-------------------------------------------------------------------------------
