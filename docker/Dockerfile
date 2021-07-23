@@ -133,7 +133,9 @@ RUN cd /img                                                                 && \
 # the image build.
 #
 
+USER root
 RUN /sbin/ldconfig
+USER user
 
 #-------------------------------------------------------------------------------
 
@@ -142,7 +144,7 @@ RUN /sbin/ldconfig
 # ENTRYPOINT
 #
 
-ADD docker/entrypoint.sh /img
+ADD --chown=user docker/entrypoint.sh /img
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/img/entrypoint.sh"]
