@@ -54,10 +54,6 @@ RUN \
 ENV HOME /root
 WORKDIR $HOME
 
-ENV PATH "$HOME/.local/bin:${PATH}"
-
-# RUN mkdir -p $HOME/.config $HOME/.SpaceVim.d
-# RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
 COPY docker/SpaceVim.d $HOME/.SpaceVim.d
 RUN curl -sLf https://spacevim.org/install.sh | bash
 RUN nvim --headless +'call dein#install()' +qall
