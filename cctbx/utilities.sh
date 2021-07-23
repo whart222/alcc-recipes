@@ -35,7 +35,7 @@ mk-env () {
         # HACK: mamba/micromamba does not support --force removal yet
         # https://github.com/mamba-org/mamba/issues/412
         conda remove --force mpi4py mpi openmpi --yes || true
-        micromamba install mpi4py -c defaults --yes
+        micromamba install mpich mpi4py mpich -c defaults --yes
         micromamba deactivate
     elif [[ $1 == "openmpi" ]]
     then

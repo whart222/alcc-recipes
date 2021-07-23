@@ -73,16 +73,20 @@ WORKDIR /img
 #-------------------------------------------------------------------------------
 
 
+#-------------------------------------------------------------------------------
+# BUILD CCTBX
+#
+
 RUN mkdir -p /img
 COPY cctbx /img
 
-# RUN cd /img                                                                 && \
-#     ./opt/get_mamba_linux-64.sh
-# 
-# RUN cd /img                                                                 && \
-#     source utilities.sh                                                     && \
-#     mk-env mpich
-#    
+RUN cd /img                                                                 && \
+    ./opt/get_mamba_linux-64.sh
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    mk-env conda-mpich
+
 # RUN cd /img                                                                 && \
 #     source utilities.sh                                                     && \
 #     mk-cctbx
@@ -96,7 +100,10 @@ COPY cctbx /img
 #     source utilities.sh                                                     && \
 #     activate                                                                && \
 #     micromamba clean -ay
-# 
+
+#-------------------------------------------------------------------------------
+
+
 # #-------------------------------------------------------------------------------
 # # LDCONFIG
 # #
