@@ -1,0 +1,12 @@
+--- __init__.py.old	2021-07-23 12:37:21.721113841 -0700
++++ __init__.py	2021-07-23 12:37:57.388585077 -0700
+@@ -1026,7 +1026,7 @@
+             stream = self.stream
+             # issue 35046: merged two stream.writes into one.
+             stream.write(msg + self.terminator)
+-            self.flush()
++            # self.flush()
+         except RecursionError:  # See issue 36272
+             raise
+         except Exception:
+

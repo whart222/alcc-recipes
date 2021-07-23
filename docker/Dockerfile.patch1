@@ -1,0 +1,6 @@
+FROM cctbx-xfel
+
+
+ADD --chown=user patches/logging.patch /img/opt/mamba/envs/psana_env/lib/python3.7/logging
+RUN cd /img/opt/mamba/envs/psana_env/lib/python3.7/logging/ && \
+        patch __init__.py logging.patch

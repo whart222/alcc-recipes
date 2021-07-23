@@ -1,0 +1,22 @@
+FROM cctbx-xfel:p1
+
+USER root
+RUN apt-get install git-lfs --yes
+
+
+USER user
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    activate                                                                && \
+    micromamba install pandas -c defaults -y
+RUN cd /img/modules                                                         && \
+    git clone https://github.com/yayahjb/ncdist.git                         && \
+    git clone https://gitlab.com/cctbx/uc_metrics.git
+RUN cd /img/modules/dxtbx                                                   && \
+    git checkout mpi_experiment
+RUN cd /img/build                                                           && \
+    source ../utilities.sh                                                  && \
+    activate                                                                && \
+    libtbx.configure uc_metrics                                             && \
+    make reconf

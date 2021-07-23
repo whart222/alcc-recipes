@@ -1,0 +1,3 @@
+FROM cctbx-xfel:p2
+
+ADD --chown=user patches/activate.sh /img
