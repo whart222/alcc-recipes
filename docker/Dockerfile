@@ -48,13 +48,29 @@ RUN \
 
 
 #-------------------------------------------------------------------------------
+# SET up non-root USER and location for image contents
+#
+
+RUN mkdir -p /shft
+RUN mkdir -p /img
+RUN groupadd -r user && useradd -r -g user user
+RUN usermod -d /shft/home user
+RUN chown user /shft
+RUN chown user /img
+USER user
+RUN mkdir -p /shft/home
+
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
 # SPACEVIM Setup
 #
 
-ENV HOME /root
+ENV HOME /shft/home
 WORKDIR $HOME
 
-COPY docker/SpaceVim.d $HOME/.SpaceVim.d
+COPY --chown=user docker/SpaceVim.d $HOME/.SpaceVim.d
 RUN curl -sLf https://spacevim.org/install.sh | bash
 RUN nvim --headless +'call dein#install()' +qall
 
@@ -77,15 +93,14 @@ WORKDIR /img
 # BUILD CCTBX
 #
 
-RUN mkdir -p /img
-COPY cctbx /img
+COPY --chown=user cctbx /img
 
 RUN cd /img                                                                 && \
     ./opt/get_mamba_linux-64.sh
 
-RUN cd /img                                                                 && \
-    source utilities.sh                                                     && \
-    mk-env conda-mpich
+ RUN cd /img                                                                 && \
+     source utilities.sh                                                     && \
+     mk-env conda-mpich
 
 RUN cd /img                                                                 && \
     source utilities.sh                                                     && \
@@ -94,6 +109,7 @@ RUN cd /img                                                                 && \
 
 RUN cd /img                                                                 && \
     source utilities.sh                                                     && \
+    setup-env                                                               && \
     patch-env
 
 RUN cd /img                                                                 && \
