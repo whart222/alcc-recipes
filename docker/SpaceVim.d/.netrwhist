@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/Users/blaschke/Science/ExaFEL/CUG/profiling/libtbx'
+let g:netrw_dirhist_4='/Users/blaschke/Science/ExaFEL/CUG/profiling/weatherplot'
+let g:netrw_dirhist_3='/Users/blaschke/Science/ExaFEL/CUG/profiling/__pycache__'
+let g:netrw_dirhist_2='/Users/blaschke/Developer/csbcoo-spmm/serial-cxx11'
+let g:netrw_dirhist_1='/Users/blaschke/Science/ExaFEL/NESAP/CCTBX/nersc-recipies/cctbx-production/nersc-compat'
+let g:netrw_dirhist_0='/Users/blaschke/Science/GMRES-Learning-CPP/demo'
+let g:netrw_dirhist_9='/Users/blaschke/Science/GMRES-Learning-CPP'
+let g:netrw_dirhist_8='/Users/blaschke/Science'
+let g:netrw_dirhist_7='/Users/blaschke/Science/GMRES-Learning'
+let g:netrw_dirhist_6='/Users/blaschke/local/my-config/vim'

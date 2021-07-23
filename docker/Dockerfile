@@ -27,7 +27,16 @@ RUN \
         python3 python3-dev pip                                                \
         libgl1-mesa-dev libglu1-mesa-dev                                       \
         libgtk2.0-0                                                            \
-        x11-xserver-utils
+        x11-xserver-utils                                                      \
+        xclip xfonts-utils                                                     \
+        gettext                                                                \
+        libtool libtool-bin                                                    \
+        lua5.3                                                                 \
+        ninja-build                                                            \
+        pkg-config                                                             \
+        cscope                                                                 \
+        nodejs npm                                                             \
+    && apt-get clean all
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
@@ -36,6 +45,24 @@ ENV TZ=America/Los_Angeles
 RUN \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  &&  \
     echo $TZ > /etc/timezone
+
+
+#-------------------------------------------------------------------------------
+# SPACEVIM Setup
+#
+
+ENV HOME /root
+WORKDIR $HOME
+
+ENV PATH "$HOME/.local/bin:${PATH}"
+
+# RUN mkdir -p $HOME/.config $HOME/.SpaceVim.d
+# RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
+COPY docker/SpaceVim.d $HOME/.SpaceVim.d
+RUN curl -sLf https://spacevim.org/install.sh | bash
+RUN nvim --headless +'call dein#install()' +qall
+
+#-------------------------------------------------------------------------------
 
 
 #-------------------------------------------------------------------------------
