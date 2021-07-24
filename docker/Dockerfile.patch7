@@ -1,0 +1,6 @@
+FROM  cctbx-xfel:p6
+
+
+RUN cd /img/modules/cctbx_project                                           && \
+    git pull
+

@@ -1,0 +1,7 @@
+FROM  cctbx-xfel:p5
+
+
+RUN cd /img                                                                 && \
+    source utilities.sh                                                     && \
+    activate                                                                && \
+    micromamba install pydrive2 -c conda-forge -y
