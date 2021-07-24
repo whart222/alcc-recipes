@@ -66,3 +66,25 @@ else
 	$(error "No docker or podman in $(PATH). Check if one was installed.")
 endif
 endif
+
+patch6:
+ifdef HAVE_DOCKER
+	docker build -t cctbx-xfel:p6 -f docker/Dockerfile.patch6 .
+else
+ifdef HAVE_PODMAN
+	podman build -t cctbx-xfel:p6 -f docker/Dockerfile.patch6 --format docker .
+else
+	$(error "No docker or podman in $(PATH). Check if one was installed.")
+endif
+endif
+
+patch7:
+ifdef HAVE_DOCKER
+	docker build -t cctbx-xfel:p7 -f docker/Dockerfile.patch7 .
+else
+ifdef HAVE_PODMAN
+	podman build -t cctbx-xfel:p7 -f docker/Dockerfile.patch7 --format docker .
+else
+	$(error "No docker or podman in $(PATH). Check if one was installed.")
+endif
+endif
