@@ -88,3 +88,14 @@ else
 	$(error "No docker or podman in $(PATH). Check if one was installed.")
 endif
 endif
+
+patch8:
+ifdef HAVE_DOCKER
+	docker build -t cctbx-xfel:p8 -f docker/Dockerfile.patch3 .
+else
+ifdef HAVE_PODMAN
+	podman build -t cctbx-xfel:p8 -f docker/Dockerfile.patch3 --format docker .
+else
+	$(error "No docker or podman in $(PATH). Check if one was installed.")
+endif
+endif
