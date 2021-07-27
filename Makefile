@@ -1,6 +1,11 @@
 HAVE_DOCKER := $(shell which docker 2>/dev/null)
 HAVE_PODMAN := $(shell which podman 2>/dev/null)
 
+
+cori:
+	export NPROC=32
+	cctbx/setup_cori.sh
+
 image:
 ifdef HAVE_DOCKER
 	docker build -t cctbx-xfel -f docker/Dockerfile .
