@@ -78,3 +78,5 @@ dependencies:
 
  - pybind11
  - scikit-learn
+ - pandas
+ - pydrive2

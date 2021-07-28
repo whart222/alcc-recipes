@@ -48,11 +48,44 @@ RUN \
 
 
 #-------------------------------------------------------------------------------
-# SET up non-root USER and location for image contents
+# Make COMMON WORKSPACE (that won't be clobbered by Shifter)
 #
 
 RUN mkdir -p /shft
 RUN mkdir -p /img
+
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# Add MPICH
+#
+
+RUN mkdir -p /shft/app
+WORKDIR /shft/app
+
+ARG mpich=3.3
+ARG mpich_prefix=mpich-$mpich
+
+USER root
+RUN \
+    wget https://www.mpich.org/static/downloads/$mpich/$mpich_prefix.tar.gz && \
+    tar xvzf $mpich_prefix.tar.gz                                           && \
+    cd $mpich_prefix                                                        && \
+    ./configure                                                             && \
+    make -j 4                                                               && \
+    make install                                                            && \
+    make clean                                                              && \
+    cd ..                                                                   && \
+    rm -rf $mpich_prefix
+
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# SET up non-root USER and location for image contents
+#
+
 RUN groupadd -r user && useradd -r -g user user
 RUN usermod -d /shft/home user
 RUN chown user /shft
@@ -100,7 +133,7 @@ RUN cd /img                                                                 && \
 
  RUN cd /img                                                                 && \
      source utilities.sh                                                     && \
-     mk-env conda-mpich
+     mk-env mpicc
 
 RUN cd /img                                                                 && \
     source utilities.sh                                                     && \

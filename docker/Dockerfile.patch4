@@ -41,7 +41,7 @@ RUN cd /img                                                                 && \
 
 USER root
 RUN /sbin/ldconfig
-USER user 
+USER user
 
 RUN cd /img/modules/dxtbx                                                   && \
     git checkout mpi_experiment                                             && \

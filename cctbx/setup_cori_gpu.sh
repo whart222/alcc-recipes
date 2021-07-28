@@ -20,7 +20,7 @@ ${ALCC_CCTBX_ROOT}/opt/get_mamba_linux-64.sh
 
 load-sysenv
 
-mk-env openmpi
+mk-env mpicc
 if fix-sysversions
 then
     return 1

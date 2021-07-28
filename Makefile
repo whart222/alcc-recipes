@@ -2,6 +2,8 @@ HAVE_DOCKER := $(shell which docker 2>/dev/null)
 HAVE_PODMAN := $(shell which podman 2>/dev/null)
 
 
+lv07: patch3
+
 cori:
 	export NPROC=32
 	cctbx/setup_cori.sh

@@ -28,40 +28,24 @@ mk-env () {
 
     # switch MPI backends -- the psana package explicitly downloads openmpi
     # which is incompatible with some systems
+    micromamba activate psana_env
+    # HACK: mamba/micromamba does not support --force removal yet
+    # https://github.com/mamba-org/mamba/issues/412
+    micromamba install conda -c defaults --yes
+    conda remove --force mpi4py mpi openmpi mpich --yes || true
     if [[ $1 == "conda-mpich" ]]
     then
-        micromamba activate psana_env
-        micromamba install conda -c defaults --yes
-        # HACK: mamba/micromamba does not support --force removal yet
-        # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes || true
         micromamba install mpich mpi4py mpich -c defaults --yes
-        micromamba deactivate
-    elif [[ $1 == "openmpi" ]]
+    elif [[ $1 == "mpicc" ]]
     then
-        micromamba activate psana_env
-        micromamba install conda -c defaults --yes
-        # HACK: mamba/micromamba does not support --force removal yet
-        # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes || true
         MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir \
             mpi4py mpi4py
     elif [[ $1 == "cray-mpich" ]]
     then
-        micromamba activate psana_env
-        micromamba install conda -c defaults --yes
-        # HACK: mamba/micromamba does not support --force removal yet
-        # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes || true
         MPICC="cc -shared" pip install --no-binary mpi4py --no-cache-dir \
             mpi4py mpi4py
     elif [[ $1 == "cray-cuda-mpich" ]]
     then
-        micromamba activate psana_env
-        micromamba install conda -c defaults --yes
-        # HACK: mamba/micromamba does not support --force removal yet
-        # https://github.com/mamba-org/mamba/issues/412
-        conda remove --force mpi4py mpi openmpi --yes || true
         MPICC="$(which cc) -shared -lcuda -lcudart -lmpi -lgdrapi"\
             pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
     fi
