@@ -18,6 +18,9 @@ a completed setup, all you need to do is load any modules and run:
 **Note:** the arguments after `mk-cctbx cuda` are the usual arguments for
 `boostrap.py`
 
+**WARNING:** If the build script can't find `-lcuda`, then confirm that you're
+building on a Cori GPU compute (instead of a login node).
+
 ### Setting up the LS49 Module
 
 * Clone the `LS49` and `ls49_big_data` repos **inside the modules folder**
