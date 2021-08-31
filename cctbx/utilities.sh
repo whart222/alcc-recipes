@@ -48,6 +48,10 @@ mk-env () {
     then
         MPICC="$(which cc) -shared -lcuda -lcudart -lmpi -lgdrapi"\
             pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
+    elif [[ $1 == "cray-cuda-mpich-perlmutter" ]]
+    then
+        MPICC="$(which cc) -shared -target-accel=nvidia80 -lmpi -lgdrapi"\
+            pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
     fi
 
     micromamba deactivate
