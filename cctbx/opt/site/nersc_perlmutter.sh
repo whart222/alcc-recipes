@@ -2,7 +2,7 @@
 
 
 load-sysenv () {
-    module load PrgEnv-gnu cudatoolkit craype-accel-nvidia80 gcc
+    module load PrgEnv-gnu cuda cpe-cuda
 }
 
 

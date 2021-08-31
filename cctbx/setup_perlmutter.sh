@@ -20,7 +20,7 @@ ${ALCC_CCTBX_ROOT}/opt/get_mamba_linux-64.sh
 
 load-sysenv
 
-mk-env cray-cuda-mpich
+mk-env cray-cuda-mpich-perlmutter
 if fix-sysversions
 then
     return 1
