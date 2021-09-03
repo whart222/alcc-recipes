@@ -7,6 +7,7 @@ export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 source ${ALCC_CCTBX_ROOT}/utilities.sh
 source ${ALCC_CCTBX_ROOT}/opt/util/fix_lib_nersc.sh
 source ${ALCC_CCTBX_ROOT}/opt/site/nersc_cgpu.sh
+source ${ALCC_CCTBX_ROOT}/update_bootstrap.sh
 
 fix-sysversions () {
     env-activate
