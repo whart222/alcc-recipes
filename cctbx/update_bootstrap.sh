@@ -6,6 +6,6 @@ alias this="readlink -f \$(dirname \${BASH_SOURCE[0]})"
 
 
 pushd $(this)
-#rm bootstrap.py
+rm bootstrap.py
 wget "https://raw.githubusercontent.com/cctbx/cctbx_project/master/libtbx/auto_build/bootstrap.py" --no-check-certificate
 popd
