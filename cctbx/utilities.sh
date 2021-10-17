@@ -109,6 +109,7 @@ mk-cctbx () {
                             --config-flags="--enable_cxx11" \
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
+                            --config-flags="--use_environment_flags" \
                             ${@:2}
     elif [[ $1 == "no-boost" ]]
     then
@@ -119,6 +120,7 @@ mk-cctbx () {
                             --config-flags="--enable_cxx11" \
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
+                            --config-flags="--use_environment_flags" \
                             --no-boost-src \
                             ${@:2}
     elif [[ $1 == "cuda" ]]
@@ -131,6 +133,7 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --config-flags="--enable_cuda" \
+                            --config-flags="--use_environment_flags" \
                             ${@:2}
     fi
     popd
