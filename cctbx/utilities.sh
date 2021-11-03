@@ -135,6 +135,17 @@ mk-cctbx () {
                             --config-flags="--enable_cuda" \
                             --config-flags="--use_environment_flags" \
                             ${@:2}
+    elif [[ $1 == "kokkos" ]]
+    then
+        python bootstrap.py --builder=dials \
+                            --python=37 \
+                            --use-conda ${CONDA_PREFIX} \
+                            --nproc=${NPROC:-8} \
+                            --config-flags="--enable_cxx11" \
+                            --config-flags="--no_bin_python" \
+                            --config-flags="--enable_openmp_if_possible=True" \
+                            --config-flags="--enable_kokkos" \
+                            ${@:2}
     fi
     popd
 }
