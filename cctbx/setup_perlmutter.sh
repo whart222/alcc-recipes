@@ -36,6 +36,7 @@ source ${ALCC_CCTBX_ROOT}/opt/site/nersc_perlmutter.sh
 load-sysenv
 activate
 
+export CUDA_LAUNCH_BLOCKING=1
 export SIT_DATA=\${OVERWRITE_SIT_DATA:-\$NERSC_SIT_DATA}:\$SIT_DATA
 export SIT_PSDM_DATA=\${OVERWRITE_SIT_PSDM_DATA:-\$NERSC_SIT_PSDM_DATA}
 EOF
