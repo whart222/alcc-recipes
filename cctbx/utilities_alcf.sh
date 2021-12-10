@@ -4,6 +4,8 @@
 
 export ROOT_PREFIX=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 export CONDA_ENV_ROOT=${ROOT_PREFIX}/opt/mamba/envs
+export PSANA_ENV=${CONDA_ENV_ROOT}/psana_env
+export MAMBA=mamba
 
 setup-env () {
     source $IDPROOT/bin/activate
@@ -17,27 +19,27 @@ mk-env () {
     #
     # Install mamba and create the psana_env environment, cloning the Aurora base environment
     #
-    conda create -p ${CONDA_ENV_ROOT}/mybasenv --yes --clone $AURORA_BASE_ENV
-    conda activate ${CONDA_ENV_ROOT}/mybasenv
-    conda env list
+    echo "*** Creating psana_env environment ***"
+    conda create -p ${PSANA_ENV} --yes --clone $AURORA_BASE_ENV
+    conda activate ${PSANA_ENV}
+
+    echo "*** Installing mamba ***"
     conda install mamba --yes -c conda-forge
 
-    if [[ $2 == "perlmutter" ]]
-    then
-        mamba create -p ${CONDA_ENV_ROOT}/psana_env -f ${ROOT_PREFIX}/perlmutter_environment.yml --yes --clone ${CONDA_ENV_ROOT}/mybasenv
-    else
-        mamba create -p ${CONDA_ENV_ROOT}/psana_env -f ${ROOT_PREFIX}/psana_environment.yml --yes --clone ${CONDA_ENV_ROOT}/mybasenv
-    fi
-    mamba activate ${CONDA_ENV_ROOT}/psana_env
+    echo "*** Updating installation ***"
+    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/psana_environment.yml 
 
     #
     # switch MPI backends -- the psana package explicitly downloads openmpi
     # which is incompatible with some systems
     #
+    echo "*** Removing mpi4py, mpi, openmpi and mpich ***"
     conda remove --force mpi4py mpi openmpi mpich --yes || true
+
+    echo "*** Installing mpi4py ***"
     if [[ $1 == "conda-mpich" ]]
     then
-        mamba install mpich mpi4py mpich -c defaults --yes
+        ${MAMBA} install mpich mpi4py mpich -c defaults --yes
     elif [[ $1 == "mpicc" ]]
     then
         MPICC="$(which mpicc)" pip install --no-binary mpi4py --no-cache-dir \
@@ -60,7 +62,10 @@ mk-env () {
            pip install --no-binary mpi4py --no-cache-dir mpi4py mpi4py
     fi
 
-    mamba deactivate
+    echo "*** Removing gcc ***"
+    conda remove -p ${PSANA_ENV} --yes --force _libgcc_mutex libgcc-ng libstdcxx-ng
+
+    conda deactivate
 }
 
 
@@ -69,7 +74,7 @@ patch-env () {
 
     python \
         ${ROOT_PREFIX}/opt/util/patch-rpath.py \
-        ${MAMBA_ROOT_PREFIX}/envs/psana_env/lib
+        ${PSANA_ENV}/lib
 
 }
 
@@ -80,8 +85,8 @@ patch-env-parallel () {
 cat << EOF > $ROOT_PREFIX/opt/util/do_patch.sh
 source $ROOT_PREFIX/utilities_alcf.sh
 setup-env
-micromamba activate patchelf_env
-$ROOT_PREFIX/opt/util/patch_all_parallel.sh $MAMBA_ROOT_PREFIX/envs/psana_env/lib
+${MAMBA} activate patchelf_env
+$ROOT_PREFIX/opt/util/patch_all_parallel.sh $PSANA_ENV/lib
 EOF
 
     chmod +x $ROOT_PREFIX/opt/util/do_patch.sh
@@ -96,7 +101,7 @@ EOF
 
 env-activate () {
     setup-env
-    micromamba activate psana_env
+    conda activate ${PSANA_ENV}
 }
 
 
@@ -151,6 +156,18 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --config-flags="--enable_kokkos" \
+                            ${@:2}
+    elif [[ $1 == "kokkos-alcf" ]]
+    then
+        python bootstrap.py --builder=dials \
+                            --python=37 \
+                            --use-conda ${CONDA_PREFIX} \
+                            --nproc=${NPROC:-8} \
+                            --config-flags="--enable_cxx11" \
+                            --config-flags="--no_bin_python" \
+                            --config-flags="--enable_openmp_if_possible=True" \
+                            --config-flags="--enable_kokkos" \
+                            --config-flags="--compiler=icpx" \
                             ${@:2}
     fi
     popd
