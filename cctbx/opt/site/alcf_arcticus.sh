@@ -5,7 +5,7 @@ load-sysenv () {
 	module use /soft/restricted/CNDA/modulefiles
 	module load oneapi cmake
 	#module load kokkos/openmptarget_intel
-	module load kokkos/sycl_intel
+	#module load kokkos/sycl_intel
 }
 
 

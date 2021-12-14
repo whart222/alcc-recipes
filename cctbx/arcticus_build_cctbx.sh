@@ -10,8 +10,8 @@ source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
 echo "*"
 echo "* Making CCTBX"
 echo "*"
-mk-cctbx kokkos-alcf build hot update > log.mk_cctbx 2>&1
-#mk-cctbx kokkos-alcf build hot #> log.mk_cctbx 2>&1
+#mk-cctbx kokkos-alcf build hot update > log.mk_cctbx 2>&1
+mk-cctbx kokkos-alcf build hot > log.mk_cctbx 2>&1
 patch-dispatcher alcf
 
 cat > ${ALCC_CCTBX_ROOT}/activate.sh << EOF
