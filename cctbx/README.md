@@ -68,9 +68,9 @@ libtbx.configure LS49 ls49_big_data
 2. `module use /soft/restricted/CNDA/modulefiles`
 3. `module load oneapi cmake`
 
-To run the kokkos unit tests:
+To run the kokkos unit tests, you need to explicitly load the libsycl.so library:
 
-* `libtbx.python modules/cctbx_project/simtbx/kokkos/tst_kokkos_lib.py`
+* `LD_PRELOAD=/soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/compiler/pseudo-20211026/compiler/linux/lib/libsycl.so.5 libtbx.python modules/cctbx_project/simtbx/kokkos/tst_kokkos_lib.py`
 
 ### Running the LS49 Tests
 
