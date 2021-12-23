@@ -137,6 +137,7 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --config-flags="--enable_cuda" \
+                            --config-flags="--enable_kokkos" \
                             --config-flags="--use_environment_flags" \
                             ${@:2}
     elif [[ $1 == "kokkos" ]]
@@ -149,6 +150,7 @@ mk-cctbx () {
                             --config-flags="--no_bin_python" \
                             --config-flags="--enable_openmp_if_possible=True" \
                             --config-flags="--enable_kokkos" \
+                            --config-flags="--use_environment_flags" \
                             ${@:2}
     fi
     popd
