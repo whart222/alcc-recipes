@@ -29,14 +29,6 @@ building on a Cori GPU compute (instead of a login node).
   run: `./arcticus_build.sh`
 * For a complete rebuild of the C++ files, you can delete the `build` directory and rerun `./arcticus_build.sh` script.
 
-**And get some coffee**
-
-**Note:** the arguments after `mk-cctbx cuda` are the usual arguments for
-`boostrap.py`
-
-**WARNING:** If the build script can't find `-lcuda`, then confirm that you're
-building on a Cori GPU compute (instead of a login node).
-
 ### Setting up the LS49 Module
 
 * Clone the `LS49` and `ls49_big_data` repos **inside the modules folder**
@@ -67,6 +59,7 @@ libtbx.configure LS49 ls49_big_data
 1. `module purge`
 2. `module use /soft/restricted/CNDA/modulefiles`
 3. `module load oneapi cmake`
+4. `source activate.sh`
 
 To run the kokkos unit tests, you need to explicitly load the libsycl.so library:
 
