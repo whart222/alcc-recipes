@@ -20,6 +20,7 @@ dependencies:
  - python=3.7
  - biopython
  - ipython
+ - pybind11
 
  # testing
  - pytest
@@ -34,7 +35,7 @@ dependencies:
  # graphics
  - pillow
  - reportlab
- # - wxpython
+# - wxpython
  - wxpython=4.0.*
  - pyopengl
  - libtiff

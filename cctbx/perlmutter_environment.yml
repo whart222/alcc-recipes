@@ -20,6 +20,7 @@ dependencies:
  - python=3.7
  - biopython
  - ipython
+ - pybind11
 
  # testing
  - pytest
@@ -76,7 +77,7 @@ dependencies:
  - mysqlclient
  - sqlite
 
-# perlmutter
+ # perlmutter
  - libglu
 
  # temporarily pin numpy version
