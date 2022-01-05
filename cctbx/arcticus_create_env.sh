@@ -28,7 +28,8 @@ load-sysenv > log.load_sysenv 2>&1
 echo "*"
 echo "* Making Environment"
 echo "*"
-mk-env conda-mpich > log.mk_env 2>&1
+#mk-env conda-mpich > log.mk_env 2>&1
+mk-env aurora-mpich > log.mk_env 2>&1
 #echo "*"
 #echo "* Fixing Sysversions"
 #echo "*"

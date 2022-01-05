@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 export ROOT_PREFIX=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 export CONDA_ENV_ROOT=${ROOT_PREFIX}/opt/mamba/envs
 export PSANA_ENV=${CONDA_ENV_ROOT}/psana_env
@@ -9,22 +7,42 @@ export MAMBA=mamba
 
 setup-env () {
     source $IDPROOT/bin/activate
-}
+    export CONDA_AUTO_ACTIVATE_BASE=false
+    export CC=icx
+    export CXX=icpx
+    export MPI4PY_CC=icx
+    export MPI4PY_MPICC=mpicc
+    export CONDA_ROOT="${CONDA_ENV_ROOT}/conda"
+    export CONDA_PKGS_DIRS="${CONDA_ROOT}/pkgs"
+    export CONDA_ENVS_PATH="${PSANA_ENV}"
+    export PYTHONDONTWRITEBYTECODE=1
 
+    CONDA_ENV_CONFIG=intel_py38
+    rm -rf ${CONDA_ENV_CONFIG}.yml
+
+    cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
+name: ${CONDA_ENV_CONFIG}
+channels:
+  - /soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/conda_channel
+  - intel
+  - defaults
+  - conda-forge
+  - lcls-ii
+dependencies:
+  - python=3.7
+  - mamba
+EOF
+}
 
 
 mk-env () {
     setup-env
-
     #
     # Install mamba and create the psana_env environment, cloning the Aurora base environment
     #
-    echo "*** Creating psana_env environment ***"
-    conda create -p ${PSANA_ENV} --yes --clone $AURORA_BASE_ENV
+    echo "*** Creating psana_env environment and installing mamba ***"
+        conda env create -p "${PSANA_ENV}" -f ${CONDA_ENV_CONFIG}.yml
     conda activate ${PSANA_ENV}
-
-    echo "*** Installing mamba ***"
-    conda install mamba --yes -c conda-forge
 
     echo "*** Updating installation ***"
     ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/psana_environment.yml 
@@ -36,8 +54,17 @@ mk-env () {
     echo "*** Removing mpi4py, mpi, openmpi and mpich ***"
     conda remove --force mpi4py mpi openmpi mpich --yes || true
 
+    echo "*** Removing conflicts in Conda Env and use those from system ***"
+        conda remove -p ${PSANA_ENV} -y --force impi_rt || true
+        conda remove -p ${PSANA_ENV} -y --force intel-* || true
+        conda remove -p ${PSANA_ENV} -y --force dpcpp-cpp-rt || true
+        conda remove -p ${PSANA_ENV} -y --force ncurses || true
+
     echo "*** Installing mpi4py ***"
-    if [[ $1 == "conda-mpich" ]]
+        if [[ $1 == "aurora-mpich" ]]
+    then
+            CC=$MPI4PY_CC MPICC=$MPI4PY_MPICC pip install -v --no-cache-dir --no-binary mpi4py mpi4py
+    elif [[ $1 == "conda-mpich" ]]
     then
         ${MAMBA} install mpich mpi4py mpich -c defaults --yes
     elif [[ $1 == "mpicc" ]]
@@ -67,7 +94,6 @@ mk-env () {
 
     conda deactivate
 }
-
 
 
 patch-env () {
