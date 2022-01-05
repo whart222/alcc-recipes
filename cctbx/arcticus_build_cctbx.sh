@@ -1,16 +1,15 @@
 #!/bin/bash
 
 set -e
-
 export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
+rm -f ${ALCC_CCTBX_ROOT}/activate.sh
 source ${ALCC_CCTBX_ROOT}/utilities_alcf.sh
 source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
 
 echo "*"
-echo "* Making CCTBX"
+echo "* Building CCTBX"
 echo "*"
-#mk-cctbx kokkos-alcf build hot update > log.mk_cctbx 2>&1
 mk-cctbx kokkos-alcf build hot > log.mk_cctbx 2>&1
 patch-dispatcher alcf
 
