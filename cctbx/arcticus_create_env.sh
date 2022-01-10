@@ -15,10 +15,10 @@ fix-sysversions () {
     fi
 }
 
-echo "*"
-echo "* Download bootstrap.py"
-echo "*"
-${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
+#echo "*"
+#echo "* Download bootstrap.py"
+#echo "*"
+#${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
 
 echo "*"
 echo "* Load Sysenv"
@@ -28,7 +28,6 @@ load-sysenv > log.load_sysenv 2>&1
 echo "*"
 echo "* Making Environment"
 echo "*"
-#mk-env conda-mpich > log.mk_env 2>&1
 mk-env aurora-mpich > log.mk_env 2>&1
 #echo "*"
 #echo "* Fixing Sysversions"

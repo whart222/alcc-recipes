@@ -1847,9 +1847,9 @@ environment exists in or is defined by {conda_env}.
       # conda python prefers no environment customizations
       # the get_environment function in ShellCommand updates the environment
       env = {
-        'PYTHONPATH': None,
-        'LD_LIBRARY_PATH': None,
-        'DYLD_LIBRARY_PATH': None
+        #'PYTHONPATH': None,
+        #'LD_LIBRARY_PATH': None,
+        #'DYLD_LIBRARY_PATH': None
       }
 
     configcmd =[
@@ -1862,7 +1862,7 @@ environment exists in or is defined by {conda_env}.
     fname = self.opjoin("config_modules.cmd")
     ldlibpath = ''
     if self.isPlatformLinux() and self.use_conda is None:
-      ldlibpath = 'export LD_LIBRARY_PATH=../base/lib\n'
+        ldlibpath = 'export LD_LIBRARY_PATH=../base/lib:$LD_LIBRARY_PATH\n'
       # because that was the environment when python and base components were built during bootstrap
     confstr = ldlibpath + subprocess.list2cmdline(configcmd)
     if not self.isPlatformWindows():

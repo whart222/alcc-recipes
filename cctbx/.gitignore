@@ -5,5 +5,4 @@ patchelf.log
 __pycache__
 modules/
 build/
-bootstrap.py
 log.*
