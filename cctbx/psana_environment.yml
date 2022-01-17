@@ -1,5 +1,7 @@
 name: psana_env
 channels:
+ - /soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/conda_channel
+ - intel
  - defaults
  - lcls-i
  - conda-forge
