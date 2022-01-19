@@ -5,7 +5,8 @@ set -e
 export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
 source ${ALCC_CCTBX_ROOT}/utilities_alcf.sh
-source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
+#source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
+source ${ALCC_CCTBX_SITE_ARCTICUS}
 
 fix-sysversions () {
     env-activate
@@ -15,10 +16,10 @@ fix-sysversions () {
     fi
 }
 
-#echo "*"
-#echo "* Download bootstrap.py"
-#echo "*"
-#${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
+echo "*"
+echo "* Download bootstrap.py"
+echo "*"
+${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
 
 echo "*"
 echo "* Load Sysenv"

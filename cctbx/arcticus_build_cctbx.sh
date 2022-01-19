@@ -5,7 +5,8 @@ export ALCC_CCTBX_ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
 rm -f ${ALCC_CCTBX_ROOT}/activate.sh || true
 source ${ALCC_CCTBX_ROOT}/utilities_alcf.sh
-source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
+#source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
+source ${ALCC_CCTBX_SITE_ARCTICUS}
 
 echo "*"
 echo "* Load Sysenv"
@@ -20,7 +21,7 @@ mk-cctbx kokkos-alcf build hot > log.mk_cctbx 2>&1
 
 cat > ${ALCC_CCTBX_ROOT}/activate.sh << EOF
 source ${ALCC_CCTBX_ROOT}/utilities_alcf.sh
-source ${ALCC_CCTBX_ROOT}/opt/site/alcf_arcticus.sh
+source ${ALCC_CCTBX_SITE_ARCTICUS}
 load-sysenv
 activate
 
