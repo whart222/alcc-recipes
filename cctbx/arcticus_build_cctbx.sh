@@ -9,12 +9,12 @@ source ${ALCC_CCTBX_ROOT}/utilities_alcf.sh
 source ${ALCC_CCTBX_SITE_ARCTICUS}
 
 echo "*"
-echo "* Load Sysenv"
+echo "* Load Sysenv (see log.build_load_sysenv)"
 echo "*"
-load-sysenv > log.load_sysenv 2>&1
+load-sysenv > log.build_load_sysenv 2>&1
 
 echo "*"
-echo "* Building CCTBX"
+echo "* Building CCTBX (see log.mk_cctbx)"
 echo "*"
 mk-cctbx kokkos-alcf build hot > log.mk_cctbx 2>&1
 #patch-dispatcher alcf

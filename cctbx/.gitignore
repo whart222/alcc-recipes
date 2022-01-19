@@ -1,4 +1,5 @@
 activate.sh
+bootstrap.py
 opt/bin
 opt/mamba
 patchelf.log
@@ -6,3 +7,4 @@ __pycache__
 modules/
 build/
 log.*
+intel_py38.yml

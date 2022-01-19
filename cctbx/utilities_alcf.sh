@@ -16,7 +16,7 @@ setup-env () {
     export CONDA_ENVS_PATH="${PSANA_ENV}"
     export PYTHONDONTWRITEBYTECODE=1
 
-    CONDA_ENV_CONFIG=intel_py37
+    CONDA_ENV_CONFIG=intel_py38
     rm -rf ${CONDA_ENV_CONFIG}.yml
 
     cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
@@ -28,7 +28,7 @@ channels:
   - conda-forge
   - lcls-ii
 dependencies:
-  - python=3.7
+  - python=3.8
   - mamba
 EOF
     \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
@@ -46,7 +46,7 @@ mk-env () {
     conda activate ${PSANA_ENV}
 
     echo "*** Updating installation ***"
-    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/psana_environment.yml 
+    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/alcf_environment.yml 
 
     #
     # switch MPI backends -- the psana package explicitly downloads openmpi
