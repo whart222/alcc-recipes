@@ -18,11 +18,12 @@ setup-env () {
 
     CONDA_ENV_CONFIG=intel_py38
     rm -rf ${CONDA_ENV_CONFIG}.yml
-
+    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
+    CONDA_SDK_CHANNEL=$( conda config --show channels | grep soft | awk '{print $2}' )
     cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
 name: ${CONDA_ENV_CONFIG}
 channels:
-  - /soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/conda_channel
+  - ${CONDA_SDK_CHANNEL}
   - intel
   - defaults
   - conda-forge
@@ -31,7 +32,6 @@ dependencies:
   - python=3.8
   - mamba
 EOF
-    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
 }
 
 
@@ -45,8 +45,12 @@ mk-env () {
     rm ${CONDA_ENV_CONFIG}.yml
     conda activate ${PSANA_ENV}
 
+		sed '3 a \ - ${CONDA_SDK_CHANNEL}' alcf_environment.yml &> ${ROOT_PREFIX}/alcf_environment_run.yml
+		cat ${ROOT_PREFIX}/alcf_environment_run.yml
+
     echo "*** Updating installation ***"
-    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/alcf_environment.yml 
+    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/alcf_environment_run.yml 
+		rm ${ROOT_PREFIX}/alcf_environment_run.yml
 
     #
     # switch MPI backends -- the psana package explicitly downloads openmpi
