@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 
 conda deactivate
 \rm -Rf build

@@ -17,7 +17,7 @@ dependencies:
  - psana
 
  # python
- - python=3.7
+ - python=3.8
  - biopython
  - ipython
  - pybind11
