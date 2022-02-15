@@ -30,6 +30,7 @@ echo "*"
 echo "* Making Environment (see log.mk_env)"
 echo "*"
 mk-env aurora-mpich > log.mk_env 2>&1
+
 #echo "*"
 #echo "* Fixing Sysversions"
 #echo "*"

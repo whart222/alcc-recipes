@@ -19,7 +19,7 @@ setup-env () {
     CONDA_ENV_CONFIG=intel_py38
     rm -rf ${CONDA_ENV_CONFIG}.yml
     \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
-    CONDA_SDK_CHANNEL=$( conda config --show channels | grep soft | awk '{print $2}' )
+    CONDA_SDK_CHANNEL=$( cat $IDPROOT/.condarc | grep soft | awk '{print $2}' )
     cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
 name: ${CONDA_ENV_CONFIG}
 channels:
@@ -42,10 +42,11 @@ mk-env () {
     #
     echo "*** Creating psana_env environment and installing mamba ***"
     conda env create -p "${PSANA_ENV}" -f ${CONDA_ENV_CONFIG}.yml
-    rm ${CONDA_ENV_CONFIG}.yml
+    #rm ${CONDA_ENV_CONFIG}.yml
     conda activate ${PSANA_ENV}
+		echo "Update primary conda channel with oneapi sdk ${CONDA_SDK_CHANNEL}"
 
-		sed '3 a \ - ${CONDA_SDK_CHANNEL}' alcf_environment.yml &> ${ROOT_PREFIX}/alcf_environment_run.yml
+		sed "2 a \ - ${CONDA_SDK_CHANNEL}" alcf_environment.yml &> ${ROOT_PREFIX}/alcf_environment_run.yml
 		cat ${ROOT_PREFIX}/alcf_environment_run.yml
 
     echo "*** Updating installation ***"
