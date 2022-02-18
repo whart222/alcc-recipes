@@ -1,8 +1,8 @@
 #!/bin/bash
 
 conda deactivate
-#\rm -Rf build
-#\rm -Rf modules
+\rm -Rf build
+\rm -Rf modules
 \rm -Rf opt/bin
 \rm -Rf opt/mamba
 \rm -f log.*
