@@ -16,7 +16,7 @@ setup-env () {
     export CONDA_ENVS_PATH="${PSANA_ENV}"
     export PYTHONDONTWRITEBYTECODE=1
 
-    CONDA_ENV_CONFIG=intel_py38
+    CONDA_ENV_CONFIG=intel_py39
     rm -rf ${CONDA_ENV_CONFIG}.yml
     \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
     CONDA_SDK_CHANNEL=$( cat $IDPROOT/.condarc | grep soft | awk '{print $2}' )
@@ -29,7 +29,7 @@ channels:
   - conda-forge
   - lcls-ii
 dependencies:
-  - python=3.8
+  - python=3.9
   - mamba
 EOF
 }
@@ -42,7 +42,7 @@ mk-env () {
     #
     echo "*** Creating psana_env environment and installing mamba ***"
     conda env create -p "${PSANA_ENV}" -f ${CONDA_ENV_CONFIG}.yml
-    #rm ${CONDA_ENV_CONFIG}.yml
+    rm ${CONDA_ENV_CONFIG}.yml
     conda activate ${PSANA_ENV}
 		echo "Update primary conda channel with oneapi sdk ${CONDA_SDK_CHANNEL}"
 
