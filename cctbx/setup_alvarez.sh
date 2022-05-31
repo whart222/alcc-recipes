@@ -22,7 +22,7 @@ ${ALCC_CCTBX_ROOT}/opt/get_mamba_linux-64.sh
 
 load-sysenv
 
-mk-env cray-cuda-mpich-perlmutter alvarez
+mk-env cray-cuda-mpich-perlmutter perlmutter
 if fix-sysversions
 then
     return 1
@@ -38,6 +38,7 @@ source ${ALCC_CCTBX_ROOT}/opt/site/nersc_perlmutter.sh
 load-sysenv
 activate
 
+export KOKKOS_HOST=linux_a100
 export CUDA_LAUNCH_BLOCKING=1
 export SIT_DATA=\${OVERWRITE_SIT_DATA:-\$NERSC_SIT_DATA}:\$SIT_DATA
 export SIT_PSDM_DATA=\${OVERWRITE_SIT_PSDM_DATA:-\$NERSC_SIT_PSDM_DATA}
