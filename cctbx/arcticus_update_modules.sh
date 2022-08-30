@@ -14,7 +14,7 @@ echo "*"
 mk-cctbx kokkos-alcf hot update > log.update 2>&1
 
 cd modules/cctbx_project
-git checkout kokkos_arcticus
+git checkout kokkos_arcticus_update
 git pull
 
 cd ../kokkos
