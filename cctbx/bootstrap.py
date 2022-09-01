@@ -1885,15 +1885,10 @@ environment exists in or is defined by {conda_env}.
     # Prepare saving configure.py command to file should user want to manually recompile Phenix
     fname = self.opjoin("config_modules.cmd")
     ldlibpath = ''
-    # TODO SM HACK1
-    # Same as above
-    #ldlibpath = 'export LD_LIBRARY_PATH='+ldlibpath
     if self.isPlatformLinux() and self.use_conda is None:
       ldlibpath = 'export LD_LIBRARY_PATH=../base/lib\n'
       # because that was the environment when python and base components were built during bootstrap
     confstr = ldlibpath + subprocess.list2cmdline(configcmd)
-    # TODO SM HACK1
-    # Same as above
     print("Bootstrap config cmd: ", confstr)
     if not self.isPlatformWindows():
       fname = self.opjoin("config_modules.sh")
