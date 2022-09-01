@@ -1,0 +1,90 @@
+" Don't do this: I want to be able to use the 'repeat motion' action
+" " Less Shift-Key wear:
+" nmap ; :
+
+" " More convenient tag navigation
+" map <C-]> g<C-]>
+
+" " GUI: display line numbers (the standard way)
+" set number
+" GUI: turn hybrid line numbers on
+set number relativenumber
+set nu rnu
+
+" GUI: allow mouse-interactions
+set mouse=a
+
+" GUI: line break at word
+set lbr
+
+" Switch buffers more easily
+nnoremap <C-n> :bnext<CR>
+" <C-p> already taken by CtrlP
+nnoremap <C-N> :bprevious<CR>
+
+" Case-insensitive matching by default
+" If the key-word contains upper-case letters, switch to case-sensitive
+set ignorecase
+set smartcase
+
+" Spell checking locale
+" Show spelling errors using `set spell`
+set spelllang=en_us
+
+" Sane indentation:
+set tabstop=8    " show existing tab with 8 spaces (compatibility with AMReX)
+set shiftwidth=4 " block indent = 1 tab = 4 spaces
+set expandtab    " tab characters -> spaces
+set smarttab     " tabbing behavior will match rest of doc
+
+" mark column 81
+set cc=81
+
+" Make clipboard available to system
+set clipboard=unnamedplus
+
+" Syntax highlighting for SCons files
+autocmd BufRead SConstruct set filetype=python
+autocmd BufRead SConscript set filetype=python
+
+" Syntax highlighting for Komascript files
+autocmd BufRead *.lco set filetype=tex
+autocmd BufRead *.lco set filetype=tex
+
+" better menus https://stackoverflow.com/a/526940
+set wildmode=longest,list,full
+set wildmenu
+
+" highlight search results
+set hls
+
+" show current line/column
+" set cursorcolumn
+set cursorline
+
+" set colorscheme -- cursor[line, column] highlighting is kinda broken (too
+" bright) in the default scheme -- desert is a good compromise
+colorscheme desert
+
+" always show status line
+set laststatus=2
+
+
+" Additional settings from: changemewtf / no_plugins
+
+" enter the current millenium
+set nocompatible
+
+" enable the pathogen plugin manager
+execute pathogen#infect()
+
+" enable syntax and plugins (for netrw)
+syntax enable
+filetype plugin on
+
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+"
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
