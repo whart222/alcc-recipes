@@ -16,10 +16,10 @@ fix-sysversions () {
     fi
 }
 
-echo "*"
-echo "* Download bootstrap.py (see log.bootstrap)"
-echo "*"
-${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
+#echo "*"
+#echo "* Download bootstrap.py (see log.bootstrap)"
+#echo "*"
+#${ALCC_CCTBX_ROOT}/update_bootstrap.sh > log.bootstrap 2>&1
 
 echo "*"
 echo "* Load Sysenv (see log.load_sysenv)"
