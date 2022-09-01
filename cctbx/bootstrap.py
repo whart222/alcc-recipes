@@ -1860,12 +1860,14 @@ environment exists in or is defined by {conda_env}.
       if '--use_conda' not in self.config_flags:
         self.config_flags.append('--use_conda')
       self.python_base = self._get_conda_python()
+      ldlibpath = os.environ.get('LD_LIBRARY_PATH')
+      ldlibpath = ldlibpath + ':' + self.use_conda + '/lib'
       # conda python prefers no environment customizations
       # the get_environment function in ShellCommand updates the environment
       if os.environ.get('CCTBX_CONDA_USE_ENVIRONMENT_VARIABLES', None):
         env = {
           'PYTHONPATH': None,
-          'LD_LIBRARY_PATH': None,
+          'LD_LIBRARY_PATH': ldlibpath,
           'DYLD_LIBRARY_PATH': None,
           'DYLD_FALLBACK_LIBRARY_PATH': None
         }
@@ -1878,11 +1880,14 @@ environment exists in or is defined by {conda_env}.
       description="run configure.py", env=env))
     # Prepare saving configure.py command to file should user want to manually recompile Phenix
     fname = self.opjoin("config_modules.cmd")
-    ldlibpath = ''
+    #ldlibpath = 'export LD_LIBRARY_PATH='+self.use_conda+'/lib:$LD_LIBRARY_PATH'
+    ldlibpath = 'export LD_LIBRARY_PATH='+ldlibpath
+    print("ldlibpath test: ", ldlibpath)
     if self.isPlatformLinux() and self.use_conda is None:
       ldlibpath = 'export LD_LIBRARY_PATH=../base/lib\n'
       # because that was the environment when python and base components were built during bootstrap
     confstr = ldlibpath + subprocess.list2cmdline(configcmd)
+    print("config cmd: ", confstr)
     if not self.isPlatformWindows():
       fname = self.opjoin("config_modules.sh")
       confstr = '#!/bin/sh\n\n' + confstr
