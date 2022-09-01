@@ -1,6 +1,5 @@
 name: psana_env
 channels:
- - /soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/conda_channel
  - intel
  - defaults
  - lcls-i
@@ -19,10 +18,11 @@ dependencies:
  - psana
 
  # python
- - python=3.8
+ - python=3.9
  - biopython
  - ipython
  - pybind11
+ - setuptools<60
 
  # testing
  - pytest
@@ -37,8 +37,7 @@ dependencies:
  # graphics
  - pillow
  - reportlab
-# - wxpython
- - wxpython=4.0.*
+ - wxpython
  - pyopengl
  - libtiff
 

@@ -1,5 +1,4 @@
 activate.sh
-bootstrap.py
 opt/bin
 opt/mamba
 patchelf.log

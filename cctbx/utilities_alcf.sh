@@ -16,22 +16,22 @@ setup-env () {
     export CONDA_ENVS_PATH="${PSANA_ENV}"
     export PYTHONDONTWRITEBYTECODE=1
 
-    CONDA_ENV_CONFIG=intel_py38
+    CONDA_ENV_CONFIG=intel_py39
     rm -rf ${CONDA_ENV_CONFIG}.yml
-
+    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
+    CONDA_SDK_CHANNEL=$( cat $IDPROOT/.condarc | grep soft | awk '{print $2}' )
     cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
 name: ${CONDA_ENV_CONFIG}
 channels:
-  - /soft/restricted/CNDA/sdk/2021.10.30.001/oneapi/conda_channel
+  - ${CONDA_SDK_CHANNEL}
   - intel
   - defaults
   - conda-forge
   - lcls-ii
 dependencies:
-  - python=3.8
+  - python=3.9
   - mamba
 EOF
-    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
 }
 
 
@@ -45,8 +45,13 @@ mk-env () {
     rm ${CONDA_ENV_CONFIG}.yml
     conda activate ${PSANA_ENV}
 
+    echo "Update primary conda channel with oneapi sdk ${CONDA_SDK_CHANNEL}"
+    sed "2 a \ - ${CONDA_SDK_CHANNEL}" alcf_environment.yml &> ${ROOT_PREFIX}/alcf_environment_run.yml
+    cat ${ROOT_PREFIX}/alcf_environment_run.yml
+
     echo "*** Updating installation ***"
-    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/alcf_environment.yml 
+    ${MAMBA} env update -p ${PSANA_ENV} --file ${ROOT_PREFIX}/alcf_environment_run.yml
+    rm ${ROOT_PREFIX}/alcf_environment_run.yml
 
     #
     # switch MPI backends -- the psana package explicitly downloads openmpi
@@ -64,7 +69,7 @@ mk-env () {
     echo "*** Installing mpi4py ***"
     if [[ $1 == "aurora-mpich" ]]
     then
-            CC=$MPI4PY_CC MPICC=$MPI4PY_MPICC pip install -v --no-cache-dir --no-binary mpi4py mpi4py
+        CC=$MPI4PY_CC MPICC=$MPI4PY_MPICC pip install -v --no-cache-dir --no-binary mpi4py mpi4py
     elif [[ $1 == "conda-mpich" ]]
     then
         ${MAMBA} install mpich mpi4py mpich -c defaults --yes
