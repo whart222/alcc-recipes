@@ -45,6 +45,9 @@ dependencies:
  - hdf5plugin                      # [unix]
  # - hdf5-external-filter-plugins  # [unix]
 
+ # From LS249 run of adse13-182
+ - pint
+
  # other
  - libsvm
  - mrcfile
@@ -85,4 +88,6 @@ dependencies:
 
  # Avoid numpy 1.21.[01234]
  # See https://github.com/cctbx/cctbx_project/issues/627
- - numpy=1.20|>=1.21.5
+ # < 1.23.0 specific to Intel scipy version limitation
+ # https://stackoverflow.com/questions/73072257/resolve-warning-a-numpy-version-1-16-5-and-1-23-0-is-required-for-this-versi
+ - numpy=1.20.3
