@@ -984,7 +984,8 @@ class iota_module(SourceModule):
 class msgpack_module(SourceModule):
   module = 'msgpack'
   anonymous = ['curl', [
-    "https://gitcdn.link/repo/dials/dependencies/dials-1.13/msgpack-3.1.1.tar.gz",
+    #FIXME SM: This link doesn't seem to work
+    #"https://gitcdn.link/repo/dials/dependencies/dials-1.13/msgpack-3.1.1.tar.gz",
     "https://github.com/dials/dependencies/raw/dials-1.13/msgpack-3.1.1.tar.gz",
   ]]
 
