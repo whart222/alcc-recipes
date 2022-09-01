@@ -1860,14 +1860,18 @@ environment exists in or is defined by {conda_env}.
       if '--use_conda' not in self.config_flags:
         self.config_flags.append('--use_conda')
       self.python_base = self._get_conda_python()
-      ldlibpath = os.environ.get('LD_LIBRARY_PATH')
-      ldlibpath = ldlibpath + ':' + self.use_conda + '/lib'
       # conda python prefers no environment customizations
       # the get_environment function in ShellCommand updates the environment
+      # TODO SM HACK1
+      # Accessing this via os env seems to be not very consistent
+      # Need to see if refactoring to pass args is better
+      # Hardcoding ldlibpath until fix
+      hostldlibpath = os.environ.get('LD_LIBRARY_PATH')
+      hostldlibpath = hostldlibpath + ':' + self.use_conda + '/lib'
       if os.environ.get('CCTBX_CONDA_USE_ENVIRONMENT_VARIABLES', None):
         env = {
           'PYTHONPATH': None,
-          'LD_LIBRARY_PATH': ldlibpath,
+          'LD_LIBRARY_PATH': hostldlibpath,
           'DYLD_LIBRARY_PATH': None,
           'DYLD_FALLBACK_LIBRARY_PATH': None
         }
@@ -1880,14 +1884,17 @@ environment exists in or is defined by {conda_env}.
       description="run configure.py", env=env))
     # Prepare saving configure.py command to file should user want to manually recompile Phenix
     fname = self.opjoin("config_modules.cmd")
-    #ldlibpath = 'export LD_LIBRARY_PATH='+self.use_conda+'/lib:$LD_LIBRARY_PATH'
-    ldlibpath = 'export LD_LIBRARY_PATH='+ldlibpath
-    print("ldlibpath test: ", ldlibpath)
+    ldlibpath = ''
+    # TODO SM HACK1
+    # Same as above
+    #ldlibpath = 'export LD_LIBRARY_PATH='+ldlibpath
     if self.isPlatformLinux() and self.use_conda is None:
       ldlibpath = 'export LD_LIBRARY_PATH=../base/lib\n'
       # because that was the environment when python and base components were built during bootstrap
     confstr = ldlibpath + subprocess.list2cmdline(configcmd)
-    print("config cmd: ", confstr)
+    # TODO SM HACK1
+    # Same as above
+    print("Bootstrap config cmd: ", confstr)
     if not self.isPlatformWindows():
       fname = self.opjoin("config_modules.sh")
       confstr = '#!/bin/sh\n\n' + confstr

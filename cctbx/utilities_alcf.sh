@@ -190,7 +190,6 @@ mk-cctbx () {
                             ${@:2}
     elif [[ $1 == "kokkos-alcf" ]]
     then
-        export CCTBX_CONDA_USE_ENVIRONMENT_VARIABLES=1
         python bootstrap.py --builder=dials \
                             --python=37 \
                             --use-conda ${CONDA_PREFIX} \
