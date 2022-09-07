@@ -5,6 +5,8 @@ export CONDA_ENV_ROOT=${ROOT_PREFIX}/opt/mamba/envs
 export PSANA_ENV=${CONDA_ENV_ROOT}/psana_env
 export MAMBA=mamba
 
+CONDA_ENV_CONFIG=intel_python
+
 setup-env () {
     export CONDA_AUTO_ACTIVATE_BASE=false
     export CC=icx
@@ -16,7 +18,6 @@ setup-env () {
     export CONDA_ENVS_PATH="${PSANA_ENV}"
     export PYTHONDONTWRITEBYTECODE=1
 
-    CONDA_ENV_CONFIG=intel_py39
     rm -rf ${CONDA_ENV_CONFIG}.yml
     \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
     CONDA_SDK_CHANNEL=$( cat $IDPROOT/.condarc | grep soft | awk '{print $2}' )

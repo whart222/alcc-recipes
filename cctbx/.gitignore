@@ -6,4 +6,4 @@ __pycache__
 modules/
 build/
 log.*
-intel_py38.yml
+intel_python.yml
