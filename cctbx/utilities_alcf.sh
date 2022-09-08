@@ -17,6 +17,7 @@ setup-env () {
     export CONDA_PKGS_DIRS="${CONDA_ROOT}/pkgs"
     export CONDA_ENVS_PATH="${PSANA_ENV}"
     export PYTHONDONTWRITEBYTECODE=1
+    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
 }
 
 
@@ -26,7 +27,6 @@ mk-env () {
     # Setup Intel Conda channel automatically based on SDK path
     #
     rm -rf ${CONDA_ENV_CONFIG}.yml
-    \. "$IDPROOT/etc/profile.d/conda.sh" || return $?
     CONDA_SDK_CHANNEL=$( cat $IDPROOT/.condarc | grep soft | awk '{print $2}' )
     cat >> ${CONDA_ENV_CONFIG}.yml <<EOF
 name: ${CONDA_ENV_CONFIG}
